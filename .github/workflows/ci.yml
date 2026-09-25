@@ -17,11 +17,14 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android platform
-        run: sdkmanager "platforms;android-36"
+      - name: Install Android SDK packages
+        # ubuntu-latest already ships the SDK and sdkmanager, so no
+        # third-party setup action is needed (android-actions/setup-android
+        # is currently broken: it asks sdkmanager for the obsolete 'tools'
+        # package, which fails with exit code 1).
+        run: |
+          yes | sdkmanager --licenses > /dev/null
+          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.14206865"
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
