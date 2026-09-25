@@ -23,8 +23,14 @@ jobs:
         # is currently broken: it asks sdkmanager for the obsolete 'tools'
         # package, which fails with exit code 1).
         run: |
-          yes | sdkmanager --licenses > /dev/null
-          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.14206865"
+          SDKROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          SDKMANAGER="$SDKROOT/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER="$(ls "$SDKROOT"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | sort -V | tail -n 1)"
+          fi
+          echo "Using sdkmanager: $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null
+          "$SDKMANAGER" "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.14206865"
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
