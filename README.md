@@ -73,6 +73,30 @@ automatically retries the capture with the offline Whisper model.
 
 The debug APK is written to `app/build/outputs/apk/debug/app-debug.apk`.
 
+## Install (release APK, sideload via adb)
+
+There is no Play Store / F-Droid distribution. To ship a release to users,
+build the signed release APK and stream-install it:
+
+```bash
+./gradlew assembleRelease
+adb install app/build/outputs/apk/release/app-release.apk
+```
+
+(Current platform-tools perform a streamed install automatically.) Notes:
+
+- v1.0.0 = `versionCode 1`, `versionName "1.0.0"` (see `app/build.gradle.kts`).
+- The APK is large (~170 MB): two bundled Piper voices plus espeak-ng data.
+- Updates must be signed with the **same release key** or Android will refuse
+  the install; if you ever switch keys, uninstall first (which wipes the
+  local chat history — export it from the drawer beforehand).
+- The release build only permits cleartext HTTP to local/tailnet hosts (see
+  `app/src/main/res/xml/network_security_config.xml`); set your LLM host in
+  Settings after installing.
+- Release signing is configured in `app/build.gradle.kts` and activates only
+  when the keystore + passwords are present (env vars or the local
+  `~/.gradle/gradle.properties`); public CI just validates the build.
+
 ## Configure
 
 Open **Settings** in the app and set:

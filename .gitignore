@@ -20,5 +20,10 @@ captures/
 .DS_Store
 Thumbs.db
 
+# Signing: release keystores and password files must never be committed.
+*.jks
+*.keystore
+keystore.properties
+
 # Logs
 *.log
