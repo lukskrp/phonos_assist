@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Default: no cleartext. PhonosAssist talks to a user-configured local LLM
+         server, so cleartext stays disabled except for the known dev / Tailscale
+         hosts below. Prefer HTTPS for any other endpoint. Debug builds override
+         this file to permit cleartext anywhere (see src/debug). -->
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Default dev host (Tailscale IP of the Omen laptop). -->
+        <domain includeSubdomains="true">100.76.124.106</domain>
+        <!-- Loopback + Android emulator host alias. -->
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <!-- Tailscale MagicDNS tailnet hosts (e.g. omen-17.<tailnet>.ts.net). -->
+        <domain includeSubdomains="true">ts.net</domain>
+    </domain-config>
+</network-security-config>

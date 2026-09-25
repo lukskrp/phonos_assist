@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Debug builds talk to a dev-machine LLM server over plain HTTP from
+         arbitrary hosts/IPs, so allow cleartext wholesale. This overrides the
+         main (release) config, which only allows the known dev/tailnet hosts. -->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

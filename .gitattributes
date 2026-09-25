@@ -1,0 +1,27 @@
+# Normalize line endings: text files use LF in the repo (lossless CRLF on
+# Windows checkouts); binary blobs are never converted.
+* text=auto
+
+*.kt text eol=lf
+*.kts text eol=lf
+*.java text eol=lf
+*.xml text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.gradle text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ronn text eol=lf
+*.pro text eol=lf
+*.sh text eol=lf
+
+# Binary: voice models, native libs, audio, compiled speech data.
+*.onnx binary
+*.so binary
+*.wav binary
+*_dict binary
+*.bin binary
